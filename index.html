@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindOverMatters - Transform Your Mind, Body & Spirit</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --success: #48BB78;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.1"><polygon fill="white" points="0,1000 1000,0 1000,1000"/></svg>');
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            opacity: 0.9;
+        }
+        
+        /* Opt-in Form */
+        .optin-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 18px;
+        }
+
+        .btn-bundle {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            font-size: 1.3rem;
+            padding: 20px 50px;
+        }
+        
+        /* Individual Ebooks Section */
+        .ebooks {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+        
+        .ebooks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .ebook-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 1px solid #E2E8F0;
+            text-align: center;
+        }
+        
+        .ebook-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .ebook-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .ebook-content {
+            padding: 2rem;
+        }
+        
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .ebook-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        
+        .ebook-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        
+        .ebook-features li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        /* Bundle Section */
+        .bundle {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+        }
+        
+        .bundle-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .bundle-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 2rem;
+        }
+        
+        .bundle-price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .bundle-savings {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .testimonial-card:before {
+            content: """;
+            font-size: 4rem;
+            color: var(--accent);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+        
+        .stars {
+            color: #FFD700;
+            margin: 1rem 0;
+        }
+        
+        .customer-name {
+            font-weight: bold;
+            color: var(--dark);
+            margin-top: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .paypal-button {
+            background: #FFC439;
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .paypal-button:hover {
+            background: #F2BA36;
+            transform: translateY(-2px);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .download-section {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--success), #38A169);
+            color: white;
+        }
+        
+        .download-btn {
+            background: white;
+            color: var(--success);
+            padding: 18px 50px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 1rem 0;
+            transition: all 0.3s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .bestseller-badge {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .included-ebooks {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .included-ebook {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">MindOverMatters</div>
+            <nav>
+                <a href="#ebooks">Ebooks</a>
+                <a href="#bundle">Bundle Deal</a>
+                <a href="#testimonials">Reviews</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Transform Your Life With Our Premium Ebooks</h1>
+            <p>Get instant access to proven strategies for mind, body, and spiritual transformation</p>
+            
+            <div class="optin-form">
+                <h3 style="color: var(--dark); margin-bottom: 1.5rem;">Get Your Free Self-Improvement Starter Kit</h3>
+                <form id="lead-form">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get Free Access Now!</button>
+                </form>
+                <p style="font-size: 0.9rem; margin-top: 1rem; color: #666;">Join thousands who've transformed their lives</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Individual Ebooks Section -->
+    <section class="ebooks" id="ebooks">
+        <div class="container">
+            <h2 class="section-title">Premium Self-Improvement Ebooks</h2>
+            <p class="section-subtitle">Each ebook is a complete system for transformation</p>
+            
+            <div class="ebooks-grid">
+                <!-- Ebook 1: Tone and Transform -->
+                <div class="ebook-card">
+                    <div class="ebook-header">
+                        <h3>Tone and Transform</h3>
+                        <p>Sculpt Your Body With Home Workouts</p>
+                    </div>
+                    <div class="ebook-content">
+                        <div class="price">$67</div>
+                        <ul class="ebook-features">
+                            <li>30-day home workout plan</li>
+                            <li>No equipment needed</li>
+                            <li>Nutrition guide with meal plans</li>
+                            <li>Progress tracking system</li>
+                            <li>Beginner to advanced levels</li>
+                        </ul>
+                        <button class="btn" onclick="showCheckout('tone-transform', 67)">Get This Ebook</button>
+                    </div>
+                </div>
+                
+                <!-- Ebook 2: A Year of Self-Care -->
+                <div class="ebook-card">
+                    <div class="ebook-header">
+                        <h3>A Year of Self-Care</h3>
+                        <p>12-Month Guide to Nurturing Yourself</p>
+                    </div>
+                    <div class="ebook-content">
+                        <div class="price">$57</div>
+                        <ul class="ebook-features">
+                            <li>Monthly self-care themes</li>
+                            <li>Daily mindfulness practices</li>
+                            <li>Self-reflection exercises</li>
+                            <li>Mental health check-ins</li>
+                            <li>Customizable self-care plan</li>
+                        </ul>
+                        <button class="btn" onclick="showCheckout('self-care', 57)">Get This Ebook</button>
+                    </div>
+                </div>
+                
+                <!-- Ebook 3: Glow Up Skincare Guide -->
+                <div class="ebook-card">
+                    <div class="ebook-header">
+                        <h3>Glow Up Skincare Guide</h3>
+                        <p>Transform Your Skin Naturally</p>
+                    </div>
+                    <div class="ebook-content">
+                        <div class="price">$47</div>
+                        <ul class="ebook-features">
+                            <li>Skin type assessment guide</li>
+                            <li>Natural ingredient recipes</li>
+                            <li>Daily skincare routines</li>
+                            <li>Common skin issue solutions</li>
+                            <li>Seasonal skincare adjustments</li>
+                        </ul>
+                        <button class="btn" onclick="showCheckout('skincare-guide', 47)">Get This Ebook</button>
+                    </div>
+                </div>
+
+                <!-- Ebook 4: The Fertility Journey -->
+                <div class="ebook-card">
+                    <div class="ebook-header">
+                        <h3>The Fertility Journey</h3>
+                        <p>Holistic Guide to Conception</p>
+                    </div>
+                    <div class="ebook-content">
+                        <div class="price">$77</div>
+                        <ul class="ebook-features">
+                            <li>Cycle tracking methods</li>
+                            <li>Fertility-boosting nutrition</li>
+                            <li>Stress reduction techniques</li>
+                            <li>Partner connection exercises</li>
+                            <li>Medical option overview</li>
+                        </ul>
+                        <button class="btn" onclick="showCheckout('fertility-journey', 77)">Get This Ebook</button>
+                    </div>
+                </div>
+
+                <!-- Ebook 5: Weight & Nutrition Mastery -->
+                <div class="ebook-card">
+                    <div class="ebook-header">
+                        <h3>Weight & Nutrition Mastery</h3>
+                        <p>Science-Based Weight Management</p>
+                    </div>
+                    <div class="ebook-content">
+                        <div class="price">$67</div>
+                        <ul class="ebook-features">
+                            <li>Metabolism optimization</li>
+                            <li>Meal planning templates</li>
+                            <li>Portion control strategies</li>
+                            <li>Emotional eating solutions</li>
+                            <li>Long-term maintenance plan</li>
+                        </ul>
+                        <button class="btn" onclick="showCheckout('weight-nutrition', 67)">Get This Ebook</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bundle Deal Section -->
+    <section class="bundle" id="bundle">
+        <div class="container">
+            <div class="bundle-content">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">The Complete Transformation Bundle</h2>
+                <p style="font-size: 1.3rem; opacity: 0.9;">Get all 3 bestselling ebooks together and save 50%</p>
+                
+                <div class="bundle-card">
+                    <div class="bundle-price">$197</div>
+                    <div class="bundle-savings">Save $120 compared to buying separately</div>
+                    
+                    <div class="included-ebooks">
+                        <div class="included-ebook">✅ Tone and Transform ($67)</div>
+                        <div class="included-ebook">✅ A Year of Self-Care ($57)</div>
+                        <div class="included-ebook">✅ Glow Up Skincare Guide ($47)</div>
+                        <div class="included-ebook">✅ The Fertility Journey ($77)</div>
+                        <div class="included-ebook">✅ Weight & Nutrition Mastery ($67)</div>
+                    </div>
+                    
+                    <p style="margin: 1.5rem 0; font-size: 1.1rem;">Plus get these exclusive bundle bonuses:</p>
+                    <ul style="list-style: none; margin: 1.5rem 0; text-align: left; display: inline-block;">
+                        <li style="padding: 0.5rem 0;">🎁 Bonus: 30-Day Implementation Plan</li>
+                        <li style="padding: 0.5rem 0;">🎁 Bonus: Private Community Access</li>
+                        <li style="padding: 0.5rem 0;">🎁 Bonus: Monthly Q&A Sessions</li>
+                    </ul>
+                    
+                    <button class="btn btn-bundle" onclick="showCheckout('complete-bundle', 247)">Get The Complete Bundle</button>
+                    <div class="bestseller-badge">MOST POPULAR CHOICE</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem; font-size: 2.5rem;">What Readers Are Saying</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem; color: #666;">Real results from real customers</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Tone and Transform completely changed my approach to fitness. I lost 15 pounds in 2 months without ever going to the gym!"</p>
+                    <div class="customer-name">- Sarah M., Busy Mom</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The Fertility Journey gave us hope and practical steps. We conceived after 2 years of trying using the holistic methods."</p>
+                    <div class="customer-name">- Jennifer T., Teacher</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Weight & Nutrition Mastery helped me lose 30 pounds and keep it off. The science-based approach actually worked!"</p>
+                    <div class="customer-name">- Michael R., Office Worker</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"A Year of Self-Care saved me from burnout. The monthly themes gave me structure and the daily practices brought me peace."</p>
+                    <div class="customer-name">- Amanda K., Nurse</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="margin-bottom: 1rem; -webkit-text-fill-color: white;">MindOverMatters</div>
+            <p>Your journey to becoming the best version of yourself starts here.</p>
+            <p style="margin-top: 2rem; opacity: 0.7;"><small>© 2024 MindOverMatters. All rights reserved. | Digital products delivered instantly after payment.</small></p>
+        </div>
+    </footer>
+
+    <!-- Upsell Modal -->
+    <div class="modal" id="upsellModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeUpsell()">&times;</span>
+            <h2 style="color: var(--dark); margin-bottom: 1rem;">Want Complete Transformation?</h2>
+            <p>Since you're serious about self-improvement, get our Complete Bundle with all 5 bestselling ebooks and save $68.</p>
+            <div class="price" style="font-size: 2.5rem;">$247 (Save 45%)</div>
+            <button class="btn" onclick="showCheckout('complete-bundle', 247)" style="margin: 1.5rem 0;">Yes, I Want The Bundle!</button>
+            <p><small><a href="#" onclick="closeUpsell(); showDownload()" style="color: #666;">No thanks, I'll just take the free starter kit</a></small></p>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCheckout()">&times;</span>
+            <h2 style="color: var(--dark); margin-bottom: 1rem;" id="checkout-title">Complete Your Purchase</h2>
+            <p id="checkout-description" style="margin-bottom: 1.5rem;"></p>
+            <div class="price" id="checkout-price" style="font-size: 2.5rem;"></div>
+            
+            <form id="checkout-form">
+                <div class="form-group">
+                    <input type="email" id="customer-email" placeholder="Your Email" required>
+                </div>
+                <button type="button" class="paypal-button" onclick="processPayment()">
+                    Complete Purchase with PayPal
+                </button>
+                <div id="payment-message" class="hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Download Section -->
+    <section class="download-section hidden" id="downloadSection">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Your Free Starter Kit is Ready! 🎉</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
+            <a href="#" class="download-btn" id="download-link" onclick="downloadFile()">Download Your Free Starter Kit (PDF)</a>
+            <p style="margin-top: 1rem; opacity: 0.9;"><em>The kit has also been sent to your email address</em></p>
+            
+            <div style="margin-top: 4rem; padding: 2.5rem; background: rgba(255,255,255,0.2); border-radius: 15px; backdrop-filter: blur(10px);">
+                <h3 style="margin-bottom: 1rem;">Ready for Deeper Transformation?</h3>
+                <p style="margin-bottom: 1.5rem;">Your free kit is just the beginning. Check out our premium ebooks for complete life transformation.</p>
+                <button class="btn" onclick="closeDownload(); showEbooks()">Explore Premium Ebooks</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Products information - UPDATE WITH YOUR ACTUAL EBOOK FILE NAMES
+        const products = {
+            'tone-transform': {
+                name: 'Tone and Transform',
+                description: 'Sculpt Your Body With Home Workouts - Complete Guide',
+                price: 67,
+                file: 'tone-and-transform.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+            },
+            'self-care': {
+                name: 'A Year of Self-Care',
+                description: '12-Month Guide to Nurturing Yourself - Complete System',
+                price: 57,
+                file: 'year-of-self-care.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+            },
+            'skincare-guide': {
+                name: 'Glow Up Skincare Guide',
+                description: 'Transform Your Skin Naturally - Complete Routine',
+                price: 47,
+                file: 'glow-up-skincare.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+            },
+            'fertility-journey': {
+                name: 'The Fertility Journey',
+                description: 'Holistic Guide to Conception - Complete System',
+                price: 77,
+                file: 'fertility-journey.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+            },
+            'weight-nutrition': {
+                name: 'Weight & Nutrition Mastery',
+                description: 'Science-Based Weight Management - Complete Guide',
+                price: 67,
+                file: 'weight-nutrition.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+            },
+            'complete-bundle': {
+                name: 'Complete Transformation Bundle',
+                description: 'All 5 Bestselling Ebooks + Exclusive Bonuses',
+                price: 197,
+                file: 'complete-bundle.zip'
+            }
+        };
+
+        let currentProduct = null;
+
+        // Free lead magnet form
+        document.getElementById('lead-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            // Store user data
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userEmail', email);
+            
+            // Send to email service
+            sendToEmailService(name, email);
+            
+            // Show upsell modal
+            document.getElementById('upsellModal').style.display = 'flex';
+            
+            console.log('New lead:', { name, email });
+        });
+
+        function closeUpsell() {
+            document.getElementById('upsellModal').style.display = 'none';
+        }
+
+        function showDownload() {
+            // Show download section and hide hero
+            document.getElementById('downloadSection').classList.remove('hidden');
+            document.querySelector('.hero').style.display = 'none';
+            
+            // Scroll to download section
+            document.getElementById('downloadSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDownload() {
+            document.getElementById('downloadSection').classList.add('hidden');
+        }
+
+        function showEbooks() {
+            document.getElementById('ebooks').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showCheckout(productId, price) {
+            currentProduct = productId;
+            const product = products[productId];
+            
+            document.getElementById('checkout-title').textContent = product.name;
+            document.getElementById('checkout-description').textContent = product.description;
+            document.getElementById('checkout-price').textContent = `$${price}`;
+            
+            // Pre-fill email if available
+            const savedEmail = localStorage.getItem('userEmail');
+            if (savedEmail) {
+                document.getElementById('customer-email').value = savedEmail;
+            }
+            
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        // PayPal Payment Processing
+        function processPayment() {
+            const email = document.getElementById('customer-email').value;
+            const product = products[currentProduct];
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            // Show processing message
+            const paymentMessage = document.getElementById('payment-message');
+            paymentMessage.textContent = 'Redirecting to PayPal...';
+            paymentMessage.style.color = 'var(--primary)';
+            paymentMessage.classList.remove('hidden');
+            
+            // In real implementation, this would redirect to actual PayPal
+            setTimeout(() => {
+                closeCheckout();
+                completePurchase(currentProduct, email);
+            }, 2000);
+        }
+
+        function completePurchase(productId, email) {
+            const product = products[productId];
+            
+            // Send purchase confirmation email
+            sendPurchaseEmail(email, product);
+            
+            // Show success message
+            alert(`Thank you for your purchase! Your ${product.name} has been sent to ${email}. Check your inbox for download instructions.`);
+            
+            // Log the sale
+            console.log('Sale completed:', { 
+                product: product.name, 
+                email: email, 
+                amount: product.price,
+                date: new Date().toISOString()
+            });
+        }
+
+        // FREE STARTER KIT DOWNLOAD - UPDATE THIS FILE NAME
+        function downloadFile() {
+            const link = document.createElement('a');
+            link.href = 'guides/free-starter-kit.pdf'; // ← CHANGE TO YOUR ACTUAL FREE PDF NAME
+            link.download = 'MindOverMatters-Starter-Kit.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Email functions (you'll implement these with your email service)
+        function sendToEmailService(name, email) {
+            console.log(`Sending lead to email service: ${name} <${email}>`);
+            // Implement with SendGrid, Mailchimp, etc.
+        }
+
+        function sendPurchaseEmail(email, product) {
+            console.log(`Sending ${product.name} to ${email}`);
+            // Implement automated delivery
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
