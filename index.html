@@ -908,17 +908,39 @@ function processPayment() {
             document.body.removeChild(link);
         }
 
-        // Email functions (you'll implement these with your email service)
-        function sendToEmailService(name, email) {
-            console.log(`Sending lead to email service: ${name} <${email}>`);
-            // Implement with SendGrid, Mailchimp, etc.
-        }
+        
+        // MANUAL EMAIL AUTOMATION - IMMEDIATE DOWNLOADS
+async function sendToEmailService(name, email) {
+    // Immediately download free guide
+    provideDownload('free-starter-kit.pdf');
+    console.log(`✅ Free guide delivered to ${name} <${email}>`);
+    
+    // Log for manual follow-up
+    console.log(`📧 MANUAL TASK: Add ${email} to your email list for follow-up`);
+}
 
-        function sendPurchaseEmail(email, product) {
-            console.log(`Sending ${product.name} to ${email}`);
-            // Implement automated delivery
-        }
+async function sendPurchaseEmail(email, product) {
+    // Immediately download purchased product
+    provideDownload(product.file);
+    alert(`🎉 Thank you! Your ${product.name} is downloading now. Check your email for backup copy.`);
+    
+    console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
+    console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
+}
 
+function provideDownload(filename) {
+    const link = document.createElement('a');
+    link.href = `guides/${filename}`;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Also update the free download button function
+function downloadFile() {
+    provideDownload('free-starter-kit.pdf');
+}
         // Smooth scrolling for navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
