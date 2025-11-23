@@ -815,39 +815,8 @@
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
-        // PayPal Payment Processing
+    
         // REAL PayPal Payment Processing with LINKS
-function processPayment() {
-    const email = document.getElementById('customer-email').value;
-    const product = products[currentProduct];
-    
-    if (!email) {
-        alert('Please enter your email address');
-        return;
-    }
-
-    // Store the purchase intent
-    localStorage.setItem('pendingPurchase', JSON.stringify({
-        productId: currentProduct,
-        email: email
-    }));
-
-    // Use your actual PayPal LINKS - REPLACE THESE WITH YOUR ACTUAL PAYPAL LINKS
-   // REAL PayPal Payment Processing
-function processPayment() {
-    const email = document.getElementById('customer-email').value;
-    const product = products[currentProduct];
-    
-    if (!email) {
-        alert('Please enter your email address');
-        return;
-    }
-
-    // Store the purchase intent
-    localStorage.setItem('pendingPurchase', JSON.stringify({
-        productId: currentProduct,
-        email: email
-    }));
 
     // Use your actual PayPal BUTTON IDs - REPLACE THESE WITH YOUR ACTUAL IDs
     let paypalLink = '';
