@@ -454,6 +454,14 @@
             font-size: 0.8rem;
             color: #856404;
         }
+
+        .direct-download-link {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -708,7 +716,12 @@
         <div class="container">
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Your Free Starter Kit is Ready! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
-            <a href="Free Starter Kit.pdf" class="download-btn" id="download-link" download="MindOverMatters-Starter-Kit.pdf">Download Your Free Starter Kit (PDF)</a>
+            
+            <!-- Direct download link that works on Netlify -->
+            <a href="https://raw.githubusercontent.com/Lockedin/guides/main/Free%20Starter%20Kit.pdf" class="download-btn" download="MindOverMatters-Starter-Kit.pdf">
+                Download Your Free Starter Kit (PDF)
+            </a>
+            
             <p style="margin-top: 1rem; opacity: 0.9;"><em>The kit has also been sent to your email address</em></p>
             
             <div style="margin-top: 4rem; padding: 2.5rem; background: rgba(255,255,255,0.2); border-radius: 15px; backdrop-filter: blur(10px);">
@@ -723,43 +736,43 @@
     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 
     <script>
-        // Products information - UPDATED WITH CORRECT PATHS
+        // Products information with direct GitHub raw file links
         const products = {
             'tone-transform': {
                 name: 'Tone and Transform',
                 description: 'Sculpt Your Body With Home Workouts - Complete Guide',
                 price: 67,
-                file: 'Tone and Transform .pdf'
+                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Tone%20and%20Transform%20.pdf'
             },
             'self-care': {
                 name: 'A Year of Self-Care',
                 description: '12-Month Guide to Nurturing Yourself - Complete System',
                 price: 57,
-                file: 'A YEAR OF Care.pdf'
+                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/A%20YEAR%20OF%20Care.pdf'
             },
             'skincare-guide': {
                 name: 'Glow Up Skincare Guide',
                 description: 'Transform Your Skin Naturally - Complete Routine',
                 price: 47,
-                file: 'Glow Up The Ultimate Skincare Journey.pdf'
+                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Glow%20Up%20The%20Ultimate%20Skincare%20Journey.pdf'
             },
             'fertility-journey': {
                 name: 'The Fertility Journey',
                 description: 'Holistic Guide to Conception - Complete System',
                 price: 77,
-                file: 'The Fertility Journey.pdf'
+                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/The%20Fertility%20Journey.pdf'
             },
             'weight-nutrition': {
                 name: 'Weight & Nutrition Mastery',
                 description: 'Science-Based Weight Management - Complete Guide',
                 price: 67,
-                file: 'Weight Management & Nutrition.pdf'
+                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Weight%20Management%20%26%20Nutrition.pdf'
             },
             'complete-bundle': {
                 name: 'Complete Transformation Bundle',
                 description: '3 Bestselling Ebooks + Exclusive Bonuses',
                 price: 147,
-                file: 'Complete Bundle .zip'
+                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Complete%20Bundle%20.zip'
             }
         };
 
@@ -882,7 +895,7 @@
         // MANUAL EMAIL AUTOMATION - IMMEDIATE DOWNLOADS
         async function sendToEmailService(name, email) {
             // Immediately download free guide
-            provideDownload('Free Starter Kit.pdf');
+            provideDownload('https://raw.githubusercontent.com/Lockedin/guides/main/Free%20Starter%20Kit.pdf', 'MindOverMatters-Starter-Kit.pdf');
             console.log(`✅ Free guide delivered to ${name} <${email}>`);
             
             // Log for manual follow-up
@@ -891,18 +904,20 @@
 
         async function sendPurchaseEmail(email, product) {
             // Immediately download purchased product
-            provideDownload(product.file);
+            const fileName = product.file.split('/').pop();
+            provideDownload(product.file, fileName);
             alert(`🎉 Thank you! Your ${product.name} is downloading now. Check your email for backup copy.`);
             
             console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
             console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
         }
 
-        function provideDownload(filename) {
-            // Create direct download link
+        function provideDownload(fileUrl, fileName) {
+            // Create direct download link using GitHub raw URLs
             const link = document.createElement('a');
-            link.href = filename;
-            link.download = filename;
+            link.href = fileUrl;
+            link.download = fileName;
+            link.target = '_blank'; // Open in new tab for reliability
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
