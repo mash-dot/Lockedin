@@ -1,5 +1,4 @@
- 
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -445,6 +444,16 @@
             border-radius: 10px;
             font-size: 0.9rem;
         }
+
+        .file-path-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #856404;
+        }
     </style>
 </head>
 <body>
@@ -685,10 +694,11 @@
                 <div class="form-group">
                     <input type="email" id="customer-email" placeholder="Your Email" required>
                 </div>
-                <button type="button" class="paypal-button" onclick="processPayment()">
-                    Complete Purchase with PayPal
-                </button>
+                <div id="paypal-button-container"></div>
                 <div id="payment-message" class="hidden"></div>
+                <div class="file-path-notice">
+                    <strong>Important:</strong> After payment, you'll be redirected back to download your ebook.
+                </div>
             </form>
         </div>
     </div>
@@ -698,7 +708,7 @@
         <div class="container">
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Your Free Starter Kit is Ready! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
-            <a href="#" class="download-btn" id="download-link" onclick="downloadFile()">Download Your Free Starter Kit (PDF)</a>
+            <a href="Free Starter Kit.pdf" class="download-btn" id="download-link" download="MindOverMatters-Starter-Kit.pdf">Download Your Free Starter Kit (PDF)</a>
             <p style="margin-top: 1rem; opacity: 0.9;"><em>The kit has also been sent to your email address</em></p>
             
             <div style="margin-top: 4rem; padding: 2.5rem; background: rgba(255,255,255,0.2); border-radius: 15px; backdrop-filter: blur(10px);">
@@ -709,44 +719,47 @@
         </div>
     </section>
 
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+
     <script>
-        // Products information - UPDATED WITH ACTUAL EBOOK FILE NAMES
+        // Products information - UPDATED WITH CORRECT PATHS
         const products = {
             'tone-transform': {
                 name: 'Tone and Transform',
                 description: 'Sculpt Your Body With Home Workouts - Complete Guide',
                 price: 67,
-                file: 'Tone and Transform .pdf'  // ACTUAL FILE NAME
+                file: 'Tone and Transform .pdf'
             },
             'self-care': {
                 name: 'A Year of Self-Care',
                 description: '12-Month Guide to Nurturing Yourself - Complete System',
                 price: 57,
-                file: 'A YEAR OF Care.pdf'  // ACTUAL FILE NAME
+                file: 'A YEAR OF Care.pdf'
             },
             'skincare-guide': {
                 name: 'Glow Up Skincare Guide',
                 description: 'Transform Your Skin Naturally - Complete Routine',
                 price: 47,
-                file: 'Glow Up The Ultimate Skincare Journey.pdf'  // ACTUAL FILE NAME
+                file: 'Glow Up The Ultimate Skincare Journey.pdf'
             },
             'fertility-journey': {
                 name: 'The Fertility Journey',
                 description: 'Holistic Guide to Conception - Complete System',
                 price: 77,
-                file: 'The Fertility Journey.pdf'  // ACTUAL FILE NAME
+                file: 'The Fertility Journey.pdf'
             },
             'weight-nutrition': {
                 name: 'Weight & Nutrition Mastery',
                 description: 'Science-Based Weight Management - Complete Guide',
                 price: 67,
-                file: 'Weight Management & Nutrition.pdf'  // ACTUAL FILE NAME
+                file: 'Weight Management & Nutrition.pdf'
             },
             'complete-bundle': {
                 name: 'Complete Transformation Bundle',
                 description: '3 Bestselling Ebooks + Exclusive Bonuses',
-                price: 147, // CORRECT BUNDLE PRICE
-                file: 'Complete Bundle .zip'  // ACTUAL FILE NAME
+                price: 147,
+                file: 'Complete Bundle .zip'
             }
         };
 
@@ -807,63 +820,42 @@
                 document.getElementById('customer-email').value = savedEmail;
             }
             
+            // Render PayPal button
+            renderPayPalButton(price, product.name);
+            
             document.getElementById('checkoutModal').style.display = 'flex';
         }
 
         function closeCheckout() {
             document.getElementById('checkoutModal').style.display = 'none';
+            document.getElementById('paypal-button-container').innerHTML = '';
         }
 
-        // REAL PayPal Payment Processing with LINKS
-        function processPayment() {
-            const email = document.getElementById('customer-email').value;
-            
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-            
-            // Store email for purchase confirmation
-            localStorage.setItem('purchaseEmail', email);
-            
-            // Use your actual PayPal BUTTON IDs - UPDATED WITH CORRECT FORMAT
-            let paypalLink = '';
-            switch(currentProduct) {
-                case 'tone-transform':
-                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J3WKXA6CSH6XE';
-                    break;
-                case 'self-care':
-                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F7E7KVZA9DY8';
-                    break;
-                case 'skincare-guide':
-                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VZZXST2DKGQ64';
-                    break;
-                case 'fertility-journey':
-                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7B6R3YEFP4ETL';
-                    break;
-                case 'weight-nutrition':
-                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=53TVCZYQJGVUE';
-                    break;
-                case 'complete-bundle':
-                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FSZ3TBTAT8BS8';
-                    break;
-            }
-
-            // Redirect to PayPal in new tab
-            window.open(paypalLink, '_blank');
-            
-            // Show message
-            document.getElementById('payment-message').classList.remove('hidden');
-            document.getElementById('payment-message').innerHTML = `
-                <p style="margin-top: 1rem; color: green;">
-                    Redirecting to PayPal... After payment, you'll receive your ebook via email.
-                </p>
-            `;
-            
-            // Simulate purchase completion (in real scenario, PayPal would redirect back)
-            setTimeout(() => {
-                completePurchase(currentProduct, email);
-            }, 2000);
+        // PayPal Integration
+        function renderPayPalButton(amount, productName) {
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: amount.toString(),
+                                currency_code: 'USD'
+                            },
+                            description: productName
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        const email = document.getElementById('customer-email').value || details.payer.email_address;
+                        completePurchase(currentProduct, email);
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('There was an error processing your payment. Please try again.');
+                }
+            }).render('#paypal-button-container');
         }
 
         function completePurchase(productId, email) {
@@ -887,16 +879,6 @@
             });
         }
 
-        // FREE STARTER KIT DOWNLOAD - UPDATED WITH ACTUAL FILE NAME
-        function downloadFile() {
-            const link = document.createElement('a');
-            link.href = 'Free Starter Kit.pdf'; // ACTUAL FREE PDF NAME
-            link.download = 'MindOverMatters-Starter-Kit.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
         // MANUAL EMAIL AUTOMATION - IMMEDIATE DOWNLOADS
         async function sendToEmailService(name, email) {
             // Immediately download free guide
@@ -917,17 +899,13 @@
         }
 
         function provideDownload(filename) {
+            // Create direct download link
             const link = document.createElement('a');
             link.href = filename;
             link.download = filename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
-
-        // Also update the free download button function
-        function downloadFile() {
-            provideDownload('Free Starter Kit.pdf');
         }
 
         // Smooth scrolling for navigation
