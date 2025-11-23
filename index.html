@@ -816,27 +816,69 @@
         }
 
         // PayPal Payment Processing
-        function processPayment() {
-            const email = document.getElementById('customer-email').value;
-            const product = products[currentProduct];
-            
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-            
-            // Show processing message
-            const paymentMessage = document.getElementById('payment-message');
-            paymentMessage.textContent = 'Redirecting to PayPal...';
-            paymentMessage.style.color = 'var(--primary)';
-            paymentMessage.classList.remove('hidden');
-            
-            // In real implementation, this would redirect to actual PayPal
-            setTimeout(() => {
-                closeCheckout();
-                completePurchase(currentProduct, email);
-            }, 2000);
-        }
+        // REAL PayPal Payment Processing with LINKS
+function processPayment() {
+    const email = document.getElementById('customer-email').value;
+    const product = products[currentProduct];
+    
+    if (!email) {
+        alert('Please enter your email address');
+        return;
+    }
+
+    // Store the purchase intent
+    localStorage.setItem('pendingPurchase', JSON.stringify({
+        productId: currentProduct,
+        email: email
+    }));
+
+    // Use your actual PayPal LINKS - REPLACE THESE WITH YOUR ACTUAL PAYPAL LINKS
+   // REAL PayPal Payment Processing
+function processPayment() {
+    const email = document.getElementById('customer-email').value;
+    const product = products[currentProduct];
+    
+    if (!email) {
+        alert('Please enter your email address');
+        return;
+    }
+
+    // Store the purchase intent
+    localStorage.setItem('pendingPurchase', JSON.stringify({
+        productId: currentProduct,
+        email: email
+    }));
+
+    // Use your actual PayPal BUTTON IDs - REPLACE THESE WITH YOUR ACTUAL IDs
+    let paypalLink = '';
+    switch(currentProduct) {
+        case 'tone-transform':
+            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: J3WKXA6CSH6XE';
+            break;
+        case 'self-care':
+            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: 7F7E7KVZA9DY8';
+            break;
+        case 'skincare-guide':
+            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: VZZXST2DKGQ64';
+            break;
+        case 'fertility-journey':
+            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: 7B6R3YEFP4ETL';
+            break;
+        case 'weight-nutrition':
+            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: 53TVCZYQJGVUE';
+            break;
+        case 'complete-bundle':
+            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: FSZ3TBTAT8BS8';
+            break;
+    }
+
+    // Redirect to PayPal
+    window.location.href = paypalLink;
+}
+
+    // Redirect to PayPal
+    window.location.href = paypalLink;
+}
 
         function completePurchase(productId, email) {
             const product = products[productId];
