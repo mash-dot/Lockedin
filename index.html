@@ -455,12 +455,13 @@
             color: #856404;
         }
 
-        .direct-download-link {
-            display: block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: underline;
-            font-size: 0.9rem;
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #155724;
         }
     </style>
 </head>
@@ -705,7 +706,7 @@
                 <div id="paypal-button-container"></div>
                 <div id="payment-message" class="hidden"></div>
                 <div class="file-path-notice">
-                    <strong>Important:</strong> After payment, you'll be redirected back to download your ebook.
+                    <strong>Important:</strong> After payment, you'll be redirected to download your ebook from Google Drive.
                 </div>
             </form>
         </div>
@@ -717,8 +718,11 @@
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Your Free Starter Kit is Ready! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
             
-            <!-- Direct download link that works on Netlify -->
-            <a href="https://raw.githubusercontent.com/Lockedin/guides/main/Free%20Starter%20Kit.pdf" class="download-btn" download="MindOverMatters-Starter-Kit.pdf">
+            <div class="success-message">
+                <strong>Success!</strong> Your free ebook will open in Google Drive. Click the download button in the top right corner to save it to your device.
+            </div>
+            
+            <a href="#" class="download-btn" onclick="downloadFromGoogleDrive('free')">
                 Download Your Free Starter Kit (PDF)
             </a>
             
@@ -736,43 +740,48 @@
     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 
     <script>
-        // Products information with direct GitHub raw file links
+        // Google Drive Links - USING YOUR ACTUAL LINKS
+        const googleDriveLinks = {
+            'free': 'https://drive.google.com/file/d/1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ/view?usp=share_link',
+            'tone-transform': 'https://drive.google.com/file/d/1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi/view?usp=share_link',
+            'self-care': 'https://drive.google.com/file/d/1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH/view?usp=share_link',
+            'skincare-guide': 'https://drive.google.com/file/d/1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z/view?usp=share_link',
+            'fertility-journey': 'https://drive.google.com/file/d/1DR-hazqE8S9AVFKF6jmsvgZMekjjOVUn/view?usp=share_link',
+            'weight-nutrition': 'https://drive.google.com/file/d/1JyLcD-FRodwLUi3V5k14hqWOripGX_Nq/view?usp=share_link',
+            'complete-bundle': 'https://drive.google.com/file/d/1212JSNDI5kNK5achzSQOitjBh8L4r25/view?usp=share_link'
+        };
+
+        // Products information
         const products = {
             'tone-transform': {
                 name: 'Tone and Transform',
                 description: 'Sculpt Your Body With Home Workouts - Complete Guide',
-                price: 67,
-                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Tone%20and%20Transform%20.pdf'
+                price: 67
             },
             'self-care': {
                 name: 'A Year of Self-Care',
                 description: '12-Month Guide to Nurturing Yourself - Complete System',
-                price: 57,
-                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/A%20YEAR%20OF%20Care.pdf'
+                price: 57
             },
             'skincare-guide': {
                 name: 'Glow Up Skincare Guide',
                 description: 'Transform Your Skin Naturally - Complete Routine',
-                price: 47,
-                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Glow%20Up%20The%20Ultimate%20Skincare%20Journey.pdf'
+                price: 47
             },
             'fertility-journey': {
                 name: 'The Fertility Journey',
                 description: 'Holistic Guide to Conception - Complete System',
-                price: 77,
-                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/The%20Fertility%20Journey.pdf'
+                price: 77
             },
             'weight-nutrition': {
                 name: 'Weight & Nutrition Mastery',
                 description: 'Science-Based Weight Management - Complete Guide',
-                price: 67,
-                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Weight%20Management%20%26%20Nutrition.pdf'
+                price: 67
             },
             'complete-bundle': {
                 name: 'Complete Transformation Bundle',
                 description: '3 Bestselling Ebooks + Exclusive Bonuses',
-                price: 147,
-                file: 'https://raw.githubusercontent.com/Lockedin/guides/main/Complete%20Bundle%20.zip'
+                price: 147
             }
         };
 
@@ -892,10 +901,26 @@
             });
         }
 
-        // MANUAL EMAIL AUTOMATION - IMMEDIATE DOWNLOADS
+        // Google Drive Download Function
+        function downloadFromGoogleDrive(productId) {
+            const driveLink = googleDriveLinks[productId];
+            if (driveLink) {
+                // Open Google Drive link in new tab
+                window.open(driveLink, '_blank');
+                
+                // Show success message for free download
+                if (productId === 'free') {
+                    alert('Your free ebook is opening in Google Drive! Click the download button (↓) in the top right to save it to your device.');
+                }
+            } else {
+                alert('Download link not available. Please contact support.');
+            }
+        }
+
+        // MANUAL EMAIL AUTOMATION
         async function sendToEmailService(name, email) {
-            // Immediately download free guide
-            provideDownload('https://raw.githubusercontent.com/Lockedin/guides/main/Free%20Starter%20Kit.pdf', 'MindOverMatters-Starter-Kit.pdf');
+            // Download free guide via Google Drive
+            downloadFromGoogleDrive('free');
             console.log(`✅ Free guide delivered to ${name} <${email}>`);
             
             // Log for manual follow-up
@@ -903,24 +928,12 @@
         }
 
         async function sendPurchaseEmail(email, product) {
-            // Immediately download purchased product
-            const fileName = product.file.split('/').pop();
-            provideDownload(product.file, fileName);
-            alert(`🎉 Thank you! Your ${product.name} is downloading now. Check your email for backup copy.`);
+            // Download purchased product via Google Drive
+            downloadFromGoogleDrive(currentProduct);
+            alert(`🎉 Thank you! Your ${product.name} is downloading now from Google Drive. Check your email for backup copy.`);
             
             console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
             console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
-        }
-
-        function provideDownload(fileUrl, fileName) {
-            // Create direct download link using GitHub raw URLs
-            const link = document.createElement('a');
-            link.href = fileUrl;
-            link.download = fileName;
-            link.target = '_blank'; // Open in new tab for reliability
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
 
         // Smooth scrolling for navigation
@@ -934,6 +947,10 @@
                 }
             });
         });
+
+        // Log that Google Drive is configured
+        console.log('✅ Google Drive links configured successfully!');
+        console.log('Available downloads:', Object.keys(googleDriveLinks));
     </script>
 </body>
 </html>
