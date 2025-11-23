@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+ 
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -601,8 +602,6 @@
                         <div class="included-ebook">✅ Tone and Transform ($67)</div>
                         <div class="included-ebook">✅ A Year of Self-Care ($57)</div>
                         <div class="included-ebook">✅ Glow Up Skincare Guide ($47)</div>
-                        
-                    
                     </div>
                     
                     <p style="margin: 1.5rem 0; font-size: 1.1rem;">Plus get these exclusive bundle bonuses:</p>
@@ -612,7 +611,7 @@
                         <li style="padding: 0.5rem 0;">🎁 Bonus: Monthly Q&A Sessions</li>
                     </ul>
                     
-                    <button class="btn btn-bundle" onclick="showCheckout('complete-bundle', 247)">Get The Complete Bundle</button>
+                    <button class="btn btn-bundle" onclick="showCheckout('complete-bundle', 147)">Get The Complete Bundle</button>
                     <div class="bestseller-badge">MOST POPULAR CHOICE</div>
                 </div>
             </div>
@@ -667,7 +666,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeUpsell()">&times;</span>
             <h2 style="color: var(--dark); margin-bottom: 1rem;">Want Complete Transformation?</h2>
-            <p>Since you're serious about self-improvement, get our Complete Bundle with all 5 bestselling ebooks and save $68.</p>
+            <p>Since you're serious about self-improvement, get our Complete Bundle with all 3 bestselling ebooks and save $24.</p>
             <div class="price" style="font-size: 2.5rem;">$147 (Save 15%)</div>
             <button class="btn" onclick="showCheckout('complete-bundle', 147)" style="margin: 1.5rem 0;">Yes, I Want The Bundle!</button>
             <p><small><a href="#" onclick="closeUpsell(); showDownload()" style="color: #666;">No thanks, I'll just take the free starter kit</a></small></p>
@@ -711,43 +710,43 @@
     </section>
 
     <script>
-        // Products information - UPDATE WITH YOUR ACTUAL EBOOK FILE NAMES
+        // Products information - UPDATED WITH ACTUAL EBOOK FILE NAMES
         const products = {
             'tone-transform': {
                 name: 'Tone and Transform',
                 description: 'Sculpt Your Body With Home Workouts - Complete Guide',
                 price: 67,
-                file: 'Tone and Transform.pdf'  // CHANGEYOUR ACTUAL FILE NAME
+                file: 'Tone and Transform .pdf'  // ACTUAL FILE NAME
             },
             'self-care': {
                 name: 'A Year of Self-Care',
                 description: '12-Month Guide to Nurturing Yourself - Complete System',
                 price: 57,
-                file: 'A YEAR OF Care.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+                file: 'A YEAR OF Care.pdf'  // ACTUAL FILE NAME
             },
             'skincare-guide': {
                 name: 'Glow Up Skincare Guide',
                 description: 'Transform Your Skin Naturally - Complete Routine',
                 price: 47,
-                file: 'Glow Up The Ultimate Skincare Journey.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+                file: 'Glow Up The Ultimate Skincare Journey.pdf'  // ACTUAL FILE NAME
             },
             'fertility-journey': {
                 name: 'The Fertility Journey',
                 description: 'Holistic Guide to Conception - Complete System',
                 price: 77,
-                file: 'The Fertility Journey.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+                file: 'The Fertility Journey.pdf'  // ACTUAL FILE NAME
             },
             'weight-nutrition': {
                 name: 'Weight & Nutrition Mastery',
                 description: 'Science-Based Weight Management - Complete Guide',
                 price: 67,
-                file: 'Weight Management & Nutrition.pdf'  // CHANGE TO YOUR ACTUAL FILE NAME
+                file: 'Weight Management & Nutrition.pdf'  // ACTUAL FILE NAME
             },
             'complete-bundle': {
                 name: 'Complete Transformation Bundle',
-                description: 'All 3 Bestselling Ebooks + Exclusive Bonuses',
-                price: 197,
-                file: 'Complete Bundle zip'
+                description: '3 Bestselling Ebooks + Exclusive Bonuses',
+                price: 147, // CORRECT BUNDLE PRICE
+                file: 'Complete Bundle .zip'  // ACTUAL FILE NAME
             }
         };
 
@@ -815,39 +814,57 @@
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
-    
         // REAL PayPal Payment Processing with LINKS
+        function processPayment() {
+            const email = document.getElementById('customer-email').value;
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            // Store email for purchase confirmation
+            localStorage.setItem('purchaseEmail', email);
+            
+            // Use your actual PayPal BUTTON IDs - UPDATED WITH CORRECT FORMAT
+            let paypalLink = '';
+            switch(currentProduct) {
+                case 'tone-transform':
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J3WKXA6CSH6XE';
+                    break;
+                case 'self-care':
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F7E7KVZA9DY8';
+                    break;
+                case 'skincare-guide':
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VZZXST2DKGQ64';
+                    break;
+                case 'fertility-journey':
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7B6R3YEFP4ETL';
+                    break;
+                case 'weight-nutrition':
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=53TVCZYQJGVUE';
+                    break;
+                case 'complete-bundle':
+                    paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FSZ3TBTAT8BS8';
+                    break;
+            }
 
-    // Use your actual PayPal BUTTON IDs - REPLACE THESE WITH YOUR ACTUAL IDs
-    let paypalLink = '';
-    switch(currentProduct) {
-        case 'tone-transform':
-            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: J3WKXA6CSH6XE';
-            break;
-        case 'self-care':
-            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: 7F7E7KVZA9DY8';
-            break;
-        case 'skincare-guide':
-            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: VZZXST2DKGQ64';
-            break;
-        case 'fertility-journey':
-            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: 7B6R3YEFP4ETL';
-            break;
-        case 'weight-nutrition':
-            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: 53TVCZYQJGVUE';
-            break;
-        case 'complete-bundle':
-            paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ID: FSZ3TBTAT8BS8';
-            break;
-    }
-
-    // Redirect to PayPal
-    window.location.href = paypalLink;
-}
-
-    // Redirect to PayPal
-    window.location.href = paypalLink;
-}
+            // Redirect to PayPal in new tab
+            window.open(paypalLink, '_blank');
+            
+            // Show message
+            document.getElementById('payment-message').classList.remove('hidden');
+            document.getElementById('payment-message').innerHTML = `
+                <p style="margin-top: 1rem; color: green;">
+                    Redirecting to PayPal... After payment, you'll receive your ebook via email.
+                </p>
+            `;
+            
+            // Simulate purchase completion (in real scenario, PayPal would redirect back)
+            setTimeout(() => {
+                completePurchase(currentProduct, email);
+            }, 2000);
+        }
 
         function completePurchase(productId, email) {
             const product = products[productId];
@@ -858,6 +875,9 @@
             // Show success message
             alert(`Thank you for your purchase! Your ${product.name} has been sent to ${email}. Check your inbox for download instructions.`);
             
+            // Close checkout modal
+            closeCheckout();
+            
             // Log the sale
             console.log('Sale completed:', { 
                 product: product.name, 
@@ -867,49 +887,49 @@
             });
         }
 
-        // FREE STARTER KIT DOWNLOAD - UPDATE THIS FILE NAME
+        // FREE STARTER KIT DOWNLOAD - UPDATED WITH ACTUAL FILE NAME
         function downloadFile() {
             const link = document.createElement('a');
-            link.href = 'Free Starter Kit.pdf'; // ← CHANGE TO YOUR ACTUAL FREE PDF NAME
+            link.href = 'Free Starter Kit.pdf'; // ACTUAL FREE PDF NAME
             link.download = 'MindOverMatters-Starter-Kit.pdf';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        
         // MANUAL EMAIL AUTOMATION - IMMEDIATE DOWNLOADS
-async function sendToEmailService(name, email) {
-    // Immediately download free guide
-    provideDownload('free-starter-kit.pdf');
-    console.log(`✅ Free guide delivered to ${name} <${email}>`);
-    
-    // Log for manual follow-up
-    console.log(`📧 MANUAL TASK: Add ${email} to your email list for follow-up`);
-}
+        async function sendToEmailService(name, email) {
+            // Immediately download free guide
+            provideDownload('Free Starter Kit.pdf');
+            console.log(`✅ Free guide delivered to ${name} <${email}>`);
+            
+            // Log for manual follow-up
+            console.log(`📧 MANUAL TASK: Add ${email} to your email list for follow-up`);
+        }
 
-async function sendPurchaseEmail(email, product) {
-    // Immediately download purchased product
-    provideDownload(product.file);
-    alert(`🎉 Thank you! Your ${product.name} is downloading now. Check your email for backup copy.`);
-    
-    console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
-    console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
-}
+        async function sendPurchaseEmail(email, product) {
+            // Immediately download purchased product
+            provideDownload(product.file);
+            alert(`🎉 Thank you! Your ${product.name} is downloading now. Check your email for backup copy.`);
+            
+            console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
+            console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
+        }
 
-function provideDownload(filename) {
-    const link = document.createElement('a');
-    link.href = `guides/${filename}`;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+        function provideDownload(filename) {
+            const link = document.createElement('a');
+            link.href = filename;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
-// Also update the free download button function
-function downloadFile() {
-    provideDownload('free-starter-kit.pdf');
-}
+        // Also update the free download button function
+        function downloadFile() {
+            provideDownload('Free Starter Kit.pdf');
+        }
+
         // Smooth scrolling for navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
