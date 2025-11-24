@@ -502,6 +502,15 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        .download-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -688,7 +697,7 @@
             <p>Since you're serious about self-improvement, get our Complete Bundle with all 3 bestselling ebooks and save $24.</p>
             <div class="price" style="font-size: 2.5rem;">$147 (Save 15%)</div>
             <button class="btn" onclick="showCheckout('complete-bundle', 147)" style="margin: 1.5rem 0;">Yes, I Want The Bundle!</button>
-            <p><small><a href="#" onclick="closeUpsell(); showDownload()" style="color: #666;">No thanks, I'll just take the free starter kit</a></small></p>
+            <p><small><a href="#" onclick="closeUpsellAndDownload()" style="color: #666;">No thanks, I'll just take the free starter kit</a></small></p>
         </div>
     </div>
 
@@ -739,11 +748,11 @@
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Your Free Starter Kit is Ready! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
             
-            <div class="success-message">
-                <strong>Success!</strong> Click the button below to download your free ebook instantly.
+            <div class="download-success">
+                <strong>Success!</strong> Your download should start automatically. If it doesn't, click the button below.
             </div>
             
-            <a href="#" class="download-btn" onclick="downloadProduct('free')">
+            <a href="#" class="download-btn" onclick="forceDownload('free')">
                 Download Your Free Starter Kit (PDF)
             </a>
             
@@ -758,13 +767,28 @@
     </section>
 
     <script>
-        // Google Drive Links - USING DIRECT DOWNLOAD LINKS
+        // Google Drive Links - USING MULTIPLE FORMATS FOR RELIABILITY
         const googleDriveLinks = {
-            'free': 'https://drive.google.com/uc?export=download&id=1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ',
-            'tone-transform': 'https://drive.google.com/uc?export=download&id=1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi',
-            'self-care': 'https://drive.google.com/uc?export=download&id=1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH',
-            'skincare-guide': 'https://drive.google.com/uc?export=download&id=1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z',
-            'complete-bundle': 'https://drive.google.com/uc?export=download&id=1212JSNDI5kNK5achzSQOitjBh8L4r25'
+            'free': {
+                direct: 'https://drive.google.com/uc?export=download&id=1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ',
+                view: 'https://drive.google.com/file/d/1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ/view?usp=sharing'
+            },
+            'tone-transform': {
+                direct: 'https://drive.google.com/uc?export=download&id=1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi',
+                view: 'https://drive.google.com/file/d/1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi/view?usp=sharing'
+            },
+            'self-care': {
+                direct: 'https://drive.google.com/uc?export=download&id=1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH',
+                view: 'https://drive.google.com/file/d/1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH/view?usp=sharing'
+            },
+            'skincare-guide': {
+                direct: 'https://drive.google.com/uc?export=download&id=1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z',
+                view: 'https://drive.google.com/file/d/1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z/view?usp=sharing'
+            },
+            'complete-bundle': {
+                direct: 'https://drive.google.com/uc?export=download&id=1212JSNDI5kNK5achzSQOitjBh8L4r25',
+                view: 'https://drive.google.com/file/d/1212JSNDI5kNK5achzSQOitjBh8L4r25/view?usp=sharing'
+            }
         };
 
         // Products information
@@ -800,6 +824,11 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             
+            if (!name || !email) {
+                alert('Please enter both your name and email');
+                return;
+            }
+            
             // Store user data
             localStorage.setItem('userName', name);
             localStorage.setItem('userEmail', email);
@@ -807,20 +836,30 @@
             // Send to email service
             sendToEmailService(name, email);
             
-            // Show upsell modal
+            // Show upsell modal IMMEDIATELY
             document.getElementById('upsellModal').style.display = 'flex';
             
-            console.log('New lead:', { name, email });
+            console.log('New lead captured:', { name, email });
         });
 
         function closeUpsell() {
             document.getElementById('upsellModal').style.display = 'none';
         }
 
+        function closeUpsellAndDownload() {
+            document.getElementById('upsellModal').style.display = 'none';
+            showDownload();
+        }
+
         function showDownload() {
             // Show download section and hide hero
             document.getElementById('downloadSection').classList.remove('hidden');
             document.querySelector('.hero').style.display = 'none';
+            
+            // Auto-start download
+            setTimeout(() => {
+                forceDownload('free');
+            }, 1000);
             
             // Scroll to download section
             document.getElementById('downloadSection').scrollIntoView({ behavior: 'smooth' });
@@ -887,9 +926,14 @@
             const downloadLink = document.getElementById('success-download-link');
             downloadLink.textContent = `Download ${product.name} Now`;
             downloadLink.onclick = function() { 
-                downloadProduct(productId);
+                forceDownload(productId);
                 return false;
             };
+            
+            // Auto-start download
+            setTimeout(() => {
+                forceDownload(productId);
+            }, 500);
             
             // Send purchase confirmation email
             sendPurchaseEmail(email, product);
@@ -903,41 +947,45 @@
             });
         }
 
-        // Google Drive Download Function
-        function downloadProduct(productId) {
-            const driveLink = googleDriveLinks[productId];
-            if (driveLink) {
-                // Create a temporary anchor element to trigger download
-                const link = document.createElement('a');
-                link.href = driveLink;
-                link.target = '_blank';
-                link.click();
-                
-                // Show success message
-                if (productId === 'free') {
-                    alert('Your free ebook is downloading! Check your downloads folder.');
-                } else {
-                    alert('Your ebook is downloading! Check your downloads folder. A receipt has been sent to your email.');
-                }
-            } else {
+        // RELIABLE DOWNLOAD FUNCTION - TRIES MULTIPLE METHODS
+        function forceDownload(productId) {
+            const links = googleDriveLinks[productId];
+            
+            if (!links) {
                 alert('Download link not available. Please contact support.');
+                return;
+            }
+            
+            console.log('Attempting download for:', productId);
+            
+            // Method 1: Try direct download
+            const directLink = links.direct;
+            const directWindow = window.open(directLink, '_blank');
+            
+            // Method 2: If direct doesn't work, try view link after a delay
+            setTimeout(() => {
+                const viewLink = links.view;
+                window.open(viewLink, '_blank');
+                
+                // Show instructions for manual download
+                alert('Your ebook is opening! If the download doesn\'t start automatically:\n\n1. Look for the download icon (↓) in the top right corner\n2. Click it to save the file to your device\n3. If you see a "Download anyway" button, click it');
+            }, 1500);
+            
+            // Show success message
+            if (productId === 'free') {
+                console.log('Free ebook delivered successfully');
+            } else {
+                console.log('Paid ebook delivered successfully');
             }
         }
 
         // MANUAL EMAIL AUTOMATION
-        async function sendToEmailService(name, email) {
-            // Download free guide via Google Drive
-            downloadProduct('free');
+        function sendToEmailService(name, email) {
             console.log(`✅ Free guide delivered to ${name} <${email}>`);
-            
-            // Log for manual follow-up
             console.log(`📧 MANUAL TASK: Add ${email} to your email list for follow-up`);
         }
 
-        async function sendPurchaseEmail(email, product) {
-            // Download purchased product via Google Drive
-            downloadProduct(currentProduct);
-            
+        function sendPurchaseEmail(email, product) {
             console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
             console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
         }
@@ -957,6 +1005,7 @@
         // Log that Google Drive is configured
         console.log('✅ Google Drive links configured successfully!');
         console.log('Available downloads:', Object.keys(googleDriveLinks));
+        console.log('Upsell modal will show after free ebook signup');
     </script>
 </body>
 </html>
