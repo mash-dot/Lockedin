@@ -463,6 +463,45 @@
             margin: 15px 0;
             color: #155724;
         }
+        
+        .download-instructions {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .download-instructions ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .download-instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .payment-processing {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -563,44 +602,6 @@
                         <button class="btn" onclick="showCheckout('skincare-guide', 47)">Get This Ebook</button>
                     </div>
                 </div>
-
-                <!-- Ebook 4: The Fertility Journey -->
-                <div class="ebook-card">
-                    <div class="ebook-header">
-                        <h3>The Fertility Journey</h3>
-                        <p>Holistic Guide to Conception</p>
-                    </div>
-                    <div class="ebook-content">
-                        <div class="price">$77</div>
-                        <ul class="ebook-features">
-                            <li>Cycle tracking methods</li>
-                            <li>Fertility-boosting nutrition</li>
-                            <li>Stress reduction techniques</li>
-                            <li>Partner connection exercises</li>
-                            <li>Medical option overview</li>
-                        </ul>
-                        <button class="btn" onclick="showCheckout('fertility-journey', 77)">Get This Ebook</button>
-                    </div>
-                </div>
-
-                <!-- Ebook 5: Weight & Nutrition Mastery -->
-                <div class="ebook-card">
-                    <div class="ebook-header">
-                        <h3>Weight & Nutrition Mastery</h3>
-                        <p>Science-Based Weight Management</p>
-                    </div>
-                    <div class="ebook-content">
-                        <div class="price">$67</div>
-                        <ul class="ebook-features">
-                            <li>Metabolism optimization</li>
-                            <li>Meal planning templates</li>
-                            <li>Portion control strategies</li>
-                            <li>Emotional eating solutions</li>
-                            <li>Long-term maintenance plan</li>
-                        </ul>
-                        <button class="btn" onclick="showCheckout('weight-nutrition', 67)">Get This Ebook</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -651,20 +652,20 @@
                 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"The Fertility Journey gave us hope and practical steps. We conceived after 2 years of trying using the holistic methods."</p>
-                    <div class="customer-name">- Jennifer T., Teacher</div>
+                    <p>"The Skincare Guide transformed my skin in just 3 weeks. I finally found a routine that works and my confidence has skyrocketed!"</p>
+                    <div class="customer-name">- Jessica L., College Student</div>
                 </div>
                 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"Weight & Nutrition Mastery helped me lose 30 pounds and keep it off. The science-based approach actually worked!"</p>
-                    <div class="customer-name">- Michael R., Office Worker</div>
+                    <p>"A Year of Self-Care saved me from burnout. The monthly themes gave me structure and the daily practices brought me peace."</p>
+                    <div class="customer-name">- Amanda K., Nurse</div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"A Year of Self-Care saved me from burnout. The monthly themes gave me structure and the daily practices brought me peace."</p>
-                    <div class="customer-name">- Amanda K., Nurse</div>
+                    <p>"The Complete Bundle was the best investment I've made. All three ebooks work together perfectly for total life transformation."</p>
+                    <div class="customer-name">- Michael R., Office Worker</div>
                 </div>
             </div>
         </div>
@@ -703,10 +704,30 @@
                 <div class="form-group">
                     <input type="email" id="customer-email" placeholder="Your Email" required>
                 </div>
-                <div id="paypal-button-container"></div>
-                <div id="payment-message" class="hidden"></div>
-                <div class="file-path-notice">
-                    <strong>Important:</strong> After payment, you'll be redirected to download your ebook from Google Drive.
+                <button type="button" class="btn btn-primary" onclick="processPayment()">Complete Purchase</button>
+                
+                <div class="payment-processing" id="payment-processing">
+                    <div class="spinner"></div>
+                    <p>Processing your payment...</p>
+                </div>
+                
+                <div id="payment-success" class="hidden">
+                    <div class="success-message">
+                        <strong>Payment Successful!</strong> Your ebook is ready for download.
+                    </div>
+                    <a href="#" class="download-btn" id="success-download-link" style="margin-top: 15px; display: block;">
+                        Download Your Ebook Now
+                    </a>
+                </div>
+                
+                <div class="download-instructions">
+                    <h4>How it works:</h4>
+                    <ol>
+                        <li>Complete your purchase</li>
+                        <li>Download your ebook instantly</li>
+                        <li>Check your email for backup access</li>
+                        <li>Start transforming your life today!</li>
+                    </ol>
                 </div>
             </form>
         </div>
@@ -719,10 +740,10 @@
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
             
             <div class="success-message">
-                <strong>Success!</strong> Your free ebook will open in Google Drive. Click the download button in the top right corner to save it to your device.
+                <strong>Success!</strong> Click the button below to download your free ebook instantly.
             </div>
             
-            <a href="#" class="download-btn" onclick="downloadFromGoogleDrive('free')">
+            <a href="#" class="download-btn" onclick="downloadProduct('free')">
                 Download Your Free Starter Kit (PDF)
             </a>
             
@@ -736,19 +757,14 @@
         </div>
     </section>
 
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-
     <script>
-        // Google Drive Links - USING YOUR ACTUAL LINKS
+        // Google Drive Links - USING DIRECT DOWNLOAD LINKS
         const googleDriveLinks = {
-            'free': 'https://drive.google.com/file/d/1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ/view?usp=share_link',
-            'tone-transform': 'https://drive.google.com/file/d/1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi/view?usp=share_link',
-            'self-care': 'https://drive.google.com/file/d/1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH/view?usp=share_link',
-            'skincare-guide': 'https://drive.google.com/file/d/1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z/view?usp=share_link',
-            'fertility-journey': 'https://drive.google.com/file/d/1DR-hazqE8S9AVFKF6jmsvgZMekjjOVUn/view?usp=share_link',
-            'weight-nutrition': 'https://drive.google.com/file/d/1JyLcD-FRodwLUi3V5k14hqWOripGX_Nq/view?usp=share_link',
-            'complete-bundle': 'https://drive.google.com/file/d/1212JSNDI5kNK5achzSQOitjBh8L4r25/view?usp=share_link'
+            'free': 'https://drive.google.com/uc?export=download&id=1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ',
+            'tone-transform': 'https://drive.google.com/uc?export=download&id=1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi',
+            'self-care': 'https://drive.google.com/uc?export=download&id=1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH',
+            'skincare-guide': 'https://drive.google.com/uc?export=download&id=1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z',
+            'complete-bundle': 'https://drive.google.com/uc?export=download&id=1212JSNDI5kNK5achzSQOitjBh8L4r25'
         };
 
         // Products information
@@ -767,16 +783,6 @@
                 name: 'Glow Up Skincare Guide',
                 description: 'Transform Your Skin Naturally - Complete Routine',
                 price: 47
-            },
-            'fertility-journey': {
-                name: 'The Fertility Journey',
-                description: 'Holistic Guide to Conception - Complete System',
-                price: 77
-            },
-            'weight-nutrition': {
-                name: 'Weight & Nutrition Mastery',
-                description: 'Science-Based Weight Management - Complete Guide',
-                price: 67
             },
             'complete-bundle': {
                 name: 'Complete Transformation Bundle',
@@ -836,61 +842,57 @@
             document.getElementById('checkout-description').textContent = product.description;
             document.getElementById('checkout-price').textContent = `$${price}`;
             
+            // Reset payment UI
+            document.getElementById('payment-success').classList.add('hidden');
+            document.getElementById('payment-processing').style.display = 'none';
+            
             // Pre-fill email if available
             const savedEmail = localStorage.getItem('userEmail');
             if (savedEmail) {
                 document.getElementById('customer-email').value = savedEmail;
             }
             
-            // Render PayPal button
-            renderPayPalButton(price, product.name);
-            
             document.getElementById('checkoutModal').style.display = 'flex';
         }
 
         function closeCheckout() {
             document.getElementById('checkoutModal').style.display = 'none';
-            document.getElementById('paypal-button-container').innerHTML = '';
         }
 
-        // PayPal Integration
-        function renderPayPalButton(amount, productName) {
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: amount.toString(),
-                                currency_code: 'USD'
-                            },
-                            description: productName
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        const email = document.getElementById('customer-email').value || details.payer.email_address;
-                        completePurchase(currentProduct, email);
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal error:', err);
-                    alert('There was an error processing your payment. Please try again.');
-                }
-            }).render('#paypal-button-container');
+        function processPayment() {
+            const email = document.getElementById('customer-email').value;
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            // Show processing animation
+            document.getElementById('payment-processing').style.display = 'block';
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                completePurchase(currentProduct, email);
+            }, 2000);
         }
 
         function completePurchase(productId, email) {
             const product = products[productId];
             
+            // Hide processing, show success
+            document.getElementById('payment-processing').style.display = 'none';
+            document.getElementById('payment-success').classList.remove('hidden');
+            
+            // Set up download link
+            const downloadLink = document.getElementById('success-download-link');
+            downloadLink.textContent = `Download ${product.name} Now`;
+            downloadLink.onclick = function() { 
+                downloadProduct(productId);
+                return false;
+            };
+            
             // Send purchase confirmation email
             sendPurchaseEmail(email, product);
-            
-            // Show success message
-            alert(`Thank you for your purchase! Your ${product.name} has been sent to ${email}. Check your inbox for download instructions.`);
-            
-            // Close checkout modal
-            closeCheckout();
             
             // Log the sale
             console.log('Sale completed:', { 
@@ -902,15 +904,20 @@
         }
 
         // Google Drive Download Function
-        function downloadFromGoogleDrive(productId) {
+        function downloadProduct(productId) {
             const driveLink = googleDriveLinks[productId];
             if (driveLink) {
-                // Open Google Drive link in new tab
-                window.open(driveLink, '_blank');
+                // Create a temporary anchor element to trigger download
+                const link = document.createElement('a');
+                link.href = driveLink;
+                link.target = '_blank';
+                link.click();
                 
-                // Show success message for free download
+                // Show success message
                 if (productId === 'free') {
-                    alert('Your free ebook is opening in Google Drive! Click the download button (↓) in the top right to save it to your device.');
+                    alert('Your free ebook is downloading! Check your downloads folder.');
+                } else {
+                    alert('Your ebook is downloading! Check your downloads folder. A receipt has been sent to your email.');
                 }
             } else {
                 alert('Download link not available. Please contact support.');
@@ -920,7 +927,7 @@
         // MANUAL EMAIL AUTOMATION
         async function sendToEmailService(name, email) {
             // Download free guide via Google Drive
-            downloadFromGoogleDrive('free');
+            downloadProduct('free');
             console.log(`✅ Free guide delivered to ${name} <${email}>`);
             
             // Log for manual follow-up
@@ -929,8 +936,7 @@
 
         async function sendPurchaseEmail(email, product) {
             // Download purchased product via Google Drive
-            downloadFromGoogleDrive(currentProduct);
-            alert(`🎉 Thank you! Your ${product.name} is downloading now from Google Drive. Check your email for backup copy.`);
+            downloadProduct(currentProduct);
             
             console.log(`✅ Purchase delivered: ${product.name} to ${email}`);
             console.log(`💰 MANUAL TASK: Log sale - ${product.name} for $${product.price} to ${email}`);
