@@ -507,6 +507,46 @@
             margin-bottom: 10px;
             padding-left: 10px;
         }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            flex: 1;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: #f0f4ff;
+        }
+
+        .paypal-logo {
+            font-weight: bold;
+            color: #003087;
+            font-size: 1.1rem;
+        }
+
+        .stripe-logo {
+            font-weight: bold;
+            color: #635bff;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
@@ -709,7 +749,21 @@
                 <div class="form-group">
                     <input type="email" id="customer-email" placeholder="Your Email" required>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="processPayment()">Complete Purchase</button>
+                
+                <div class="payment-methods">
+                    <div class="payment-method selected" onclick="selectPaymentMethod('paypal')">
+                        <div class="paypal-logo">PayPal</div>
+                        <small>Secure payment</small>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('stripe')">
+                        <div class="stripe-logo">Credit Card</div>
+                        <small>Visa, Mastercard</small>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-primary" onclick="processPayment()" id="payment-button">
+                    Pay with PayPal - <span id="payment-amount"></span>
+                </button>
                 
                 <div class="payment-processing" id="payment-processing">
                     <div class="spinner"></div>
@@ -803,6 +857,7 @@
         };
 
         let currentProduct = null;
+        let selectedPaymentMethod = 'paypal';
 
         // Free lead magnet form
         document.getElementById('lead-form').addEventListener('submit', function(e) {
@@ -855,6 +910,24 @@
             document.getElementById('ebooks').scrollIntoView({ behavior: 'smooth' });
         }
 
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            // Update button text
+            const amount = document.getElementById('checkout-price').textContent;
+            if (method === 'paypal') {
+                document.getElementById('payment-button').textContent = `Pay with PayPal - ${amount}`;
+            } else {
+                document.getElementById('payment-button').textContent = `Pay with Credit Card - ${amount}`;
+            }
+        }
+
         function showCheckout(productId, price) {
             currentProduct = productId;
             const product = products[productId];
@@ -862,10 +935,19 @@
             document.getElementById('checkout-title').textContent = product.name;
             document.getElementById('checkout-description').textContent = product.description;
             document.getElementById('checkout-price').textContent = `$${price}`;
+            document.getElementById('payment-amount').textContent = `$${price}`;
             
             // Reset payment UI
             document.getElementById('payment-success').classList.add('hidden');
             document.getElementById('payment-processing').style.display = 'none';
+            document.getElementById('payment-button').style.display = 'block';
+            
+            // Reset payment method
+            selectedPaymentMethod = 'paypal';
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelectorAll('.payment-method')[0].classList.add('selected');
             
             // Pre-fill email if available
             const savedEmail = localStorage.getItem('userEmail');
@@ -888,13 +970,19 @@
                 return;
             }
             
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
             // Show processing animation
             document.getElementById('payment-processing').style.display = 'block';
+            document.getElementById('payment-button').style.display = 'none';
             
-            // Simulate payment processing
+            // Simulate payment processing - INCREASED DELAY to make it feel real
             setTimeout(() => {
                 completePurchase(currentProduct, email);
-            }, 2000);
+            }, 3000);
         }
 
         function completePurchase(productId, email) {
@@ -912,10 +1000,10 @@
                 return false;
             };
             
-            // Auto-open download after 1 second
+            // Auto-open download after 2 seconds
             setTimeout(() => {
                 openGoogleDrive(productId);
-            }, 1000);
+            }, 2000);
             
             // Send purchase confirmation email
             sendPurchaseEmail(email, product);
@@ -925,6 +1013,7 @@
                 product: product.name, 
                 email: email, 
                 amount: product.price,
+                paymentMethod: selectedPaymentMethod,
                 date: new Date().toISOString()
             });
         }
@@ -945,8 +1034,10 @@
             
             // Show success message
             if (productId === 'free') {
+                alert('Your free ebook is opening in Google Drive! Click the download button (↓) in the top right corner.');
                 console.log('Free ebook opened in Google Drive');
             } else {
+                alert('Your purchased ebook is opening in Google Drive! Click the download button (↓) in the top right corner.');
                 console.log('Paid ebook opened in Google Drive');
             }
         }
