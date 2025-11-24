@@ -371,25 +371,6 @@
             color: #666;
         }
         
-        .paypal-button {
-            background: #FFC439;
-            color: #000;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 1rem;
-            width: 100%;
-            transition: all 0.3s;
-        }
-        
-        .paypal-button:hover {
-            background: #F2BA36;
-            transform: translateY(-2px);
-        }
-        
         .hidden {
             display: none;
         }
@@ -443,16 +424,6 @@
             padding: 10px 20px;
             border-radius: 10px;
             font-size: 0.9rem;
-        }
-
-        .file-path-notice {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: #856404;
         }
 
         .success-message {
@@ -510,6 +481,31 @@
             padding: 15px;
             border-radius: 5px;
             margin: 15px 0;
+        }
+
+        .drive-download-box {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .drive-download-box h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .drive-steps {
+            text-align: left;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
+        .drive-steps li {
+            margin-bottom: 10px;
+            padding-left: 10px;
         }
     </style>
 </head>
@@ -724,19 +720,19 @@
                     <div class="success-message">
                         <strong>Payment Successful!</strong> Your ebook is ready for download.
                     </div>
-                    <a href="#" class="download-btn" id="success-download-link" style="margin-top: 15px; display: block;">
-                        Download Your Ebook Now
-                    </a>
-                </div>
-                
-                <div class="download-instructions">
-                    <h4>How it works:</h4>
-                    <ol>
-                        <li>Complete your purchase</li>
-                        <li>Download your ebook instantly</li>
-                        <li>Check your email for backup access</li>
-                        <li>Start transforming your life today!</li>
-                    </ol>
+                    <div class="drive-download-box">
+                        <h4>📥 Download Instructions</h4>
+                        <p><strong>Your ebook will open in Google Drive.</strong> Here's exactly what to do:</p>
+                        <ol class="drive-steps">
+                            <li>Look for the <strong>download icon (↓)</strong> in the top right corner</li>
+                            <li>Click the download icon to save to your device</li>
+                            <li>If you see "Download anyway", click it</li>
+                            <li>File will save to your Downloads folder</li>
+                        </ol>
+                        <a href="#" class="download-btn" id="success-download-link" style="margin-top: 15px; display: block;">
+                            Open Your Ebook in Google Drive
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -748,13 +744,19 @@
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Your Free Starter Kit is Ready! 🎉</h2>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Thank you for joining the MindOverMatters community!</p>
             
-            <div class="download-success">
-                <strong>Success!</strong> Your download should start automatically. If it doesn't, click the button below.
+            <div class="drive-download-box">
+                <h4>📥 Download Instructions</h4>
+                <p><strong>Your free ebook will open in Google Drive.</strong> Here's exactly what to do:</p>
+                <ol class="drive-steps">
+                    <li>Look for the <strong>download icon (↓)</strong> in the top right corner</li>
+                    <li>Click the download icon to save to your device</li>
+                    <li>If you see "Download anyway", click it</li>
+                    <li>File will save to your Downloads folder</li>
+                </ol>
+                <a href="#" class="download-btn" onclick="openGoogleDrive('free')">
+                    Download Your Free Starter Kit (PDF)
+                </a>
             </div>
-            
-            <a href="#" class="download-btn" onclick="forceDownload('free')">
-                Download Your Free Starter Kit (PDF)
-            </a>
             
             <p style="margin-top: 1rem; opacity: 0.9;"><em>The kit has also been sent to your email address</em></p>
             
@@ -767,28 +769,13 @@
     </section>
 
     <script>
-        // Google Drive Links - USING MULTIPLE FORMATS FOR RELIABILITY
+        // Google Drive View Links - Using the view links that WORK
         const googleDriveLinks = {
-            'free': {
-                direct: 'https://drive.google.com/uc?export=download&id=1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ',
-                view: 'https://drive.google.com/file/d/1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ/view?usp=sharing'
-            },
-            'tone-transform': {
-                direct: 'https://drive.google.com/uc?export=download&id=1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi',
-                view: 'https://drive.google.com/file/d/1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi/view?usp=sharing'
-            },
-            'self-care': {
-                direct: 'https://drive.google.com/uc?export=download&id=1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH',
-                view: 'https://drive.google.com/file/d/1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH/view?usp=sharing'
-            },
-            'skincare-guide': {
-                direct: 'https://drive.google.com/uc?export=download&id=1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z',
-                view: 'https://drive.google.com/file/d/1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z/view?usp=sharing'
-            },
-            'complete-bundle': {
-                direct: 'https://drive.google.com/uc?export=download&id=1212JSNDI5kNK5achzSQOitjBh8L4r25',
-                view: 'https://drive.google.com/file/d/1212JSNDI5kNK5achzSQOitjBh8L4r25/view?usp=sharing'
-            }
+            'free': 'https://drive.google.com/file/d/1lZhUXy_j26M9fWtq0O7KuAOozOAQ6zEQ/view?usp=sharing',
+            'tone-transform': 'https://drive.google.com/file/d/1-s-zP3W9HHFWruxCSIwtD3HRmXJdGFbi/view?usp=sharing',
+            'self-care': 'https://drive.google.com/file/d/1Wz3DNqGnHFY6TbBYqqr2KldHf3b9LpqH/view?usp=sharing',
+            'skincare-guide': 'https://drive.google.com/file/d/1Sw5w8AXPoWs_qEOf6gAvFqGG3q02Cs-Z/view?usp=sharing',
+            'complete-bundle': 'https://drive.google.com/file/d/1212JSNDI5kNK5achzSQOitjBh8L4r25/view?usp=sharing'
         };
 
         // Products information
@@ -856,11 +843,6 @@
             document.getElementById('downloadSection').classList.remove('hidden');
             document.querySelector('.hero').style.display = 'none';
             
-            // Auto-start download
-            setTimeout(() => {
-                forceDownload('free');
-            }, 1000);
-            
             // Scroll to download section
             document.getElementById('downloadSection').scrollIntoView({ behavior: 'smooth' });
         }
@@ -926,14 +908,14 @@
             const downloadLink = document.getElementById('success-download-link');
             downloadLink.textContent = `Download ${product.name} Now`;
             downloadLink.onclick = function() { 
-                forceDownload(productId);
+                openGoogleDrive(productId);
                 return false;
             };
             
-            // Auto-start download
+            // Auto-open download after 1 second
             setTimeout(() => {
-                forceDownload(productId);
-            }, 500);
+                openGoogleDrive(productId);
+            }, 1000);
             
             // Send purchase confirmation email
             sendPurchaseEmail(email, product);
@@ -947,35 +929,25 @@
             });
         }
 
-        // RELIABLE DOWNLOAD FUNCTION - TRIES MULTIPLE METHODS
-        function forceDownload(productId) {
-            const links = googleDriveLinks[productId];
+        // SIMPLE GOOGLE DRIVE OPENER - Uses the view links that WORK
+        function openGoogleDrive(productId) {
+            const driveLink = googleDriveLinks[productId];
             
-            if (!links) {
+            if (!driveLink) {
                 alert('Download link not available. Please contact support.');
                 return;
             }
             
-            console.log('Attempting download for:', productId);
+            console.log('Opening Google Drive link for:', productId);
             
-            // Method 1: Try direct download
-            const directLink = links.direct;
-            const directWindow = window.open(directLink, '_blank');
-            
-            // Method 2: If direct doesn't work, try view link after a delay
-            setTimeout(() => {
-                const viewLink = links.view;
-                window.open(viewLink, '_blank');
-                
-                // Show instructions for manual download
-                alert('Your ebook is opening! If the download doesn\'t start automatically:\n\n1. Look for the download icon (↓) in the top right corner\n2. Click it to save the file to your device\n3. If you see a "Download anyway" button, click it');
-            }, 1500);
+            // Open the Google Drive view link in a new tab
+            window.open(driveLink, '_blank');
             
             // Show success message
             if (productId === 'free') {
-                console.log('Free ebook delivered successfully');
+                console.log('Free ebook opened in Google Drive');
             } else {
-                console.log('Paid ebook delivered successfully');
+                console.log('Paid ebook opened in Google Drive');
             }
         }
 
